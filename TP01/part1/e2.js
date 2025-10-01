@@ -38,39 +38,3 @@ export default function validateAndCorrectArray(arr, elementValidator, defaultVa
 
     return res;
 }
-
-console.log("\n\nTesting validateAndCorrectArray:\n");
-
-const numbers = [2, 3, 4, 5];
-
-const result = validateAndCorrectArray(numbers, n => n % 2 === 0, 0);
-
-console.log(result.correctedArray);  // [2, 0, 4, 0]
-console.log(result.invalidElements); // [3, 5]
-
-
-const products = [
- { name: "Laptop", category: "Electronics" },
- { name: "Shirt", category: "" },
- { name: "Chair", category: "Furniture" }
-];
-
-const defaultProduct = { name: "Unknown", category: "Misc" };
-
-const resultProducts = validateAndCorrectArray(products, p => p.category.length > 0, defaultProduct);
-
-console.log(resultProducts.correctedArray);
-/*
-[
- { "name:" "Laptop", category: "Electronics" },
- { "name:" "Unknown", category: "Misc" },
- { "name:" "Chair", category: "Furniture" }
-]
-*/
-
-console.log(resultProducts.invalidElements);
-/*
-[
- { "name:" "Shirt", category: "" }
-]
-*/

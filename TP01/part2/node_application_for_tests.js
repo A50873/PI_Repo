@@ -1,6 +1,61 @@
 import fs from "fs";  // import file system module for reading/writing files
 
-const data = JSON.parse(fs.readFileSync("teams_ids.json", "utf8"));  // read and parse the JSON file
+function changeFetch(){
+    fetch = function(url){
+        const resp = {}
+        resp.json = function(){
+            return Promise.resolve(JSON.parse(data[url]))
+        }
+        return Promise.resolve(resp)
+    }
+}
+
+changeFetch();
+
+const data = {
+    "http://api.football-data.org/v4/teams/1903": JSON.stringify({
+        id: 1903,
+        name: "Manchester United All Stars",
+        squad: [
+            { name: "Edwin van der Sar" },
+            { name: "Rio Ferdinand " },
+            { name: "Ryan Giggs" },
+            { name: "Cristiano Ronaldo" }
+        ]
+    }),
+    "http://api.football-data.org/v4/teams/496": JSON.stringify({
+        id: 496,
+        name: "Juventus FC",
+        squad: [
+            { name: "Wojciech Szczęsny" },
+            { name: "Leonardo Bonucci" },
+            { name: "Federico Chiesa" },
+            { name: "Paulo Dybala" }
+        ]
+    }),
+    "http://api.football-data.org/v4/teams/498": JSON.stringify({
+        id: 498,
+        name: "AS Roma",
+        squad: [
+            { name: "Rui Patrício" },
+            { name: "Chris Smalling" },
+            { name: "Lorenzo Pellegrini" },
+            { name: "Tammy Abraham" }
+        ]
+    }),
+    "http://api.football-data.org/v4/teams/503": JSON.stringify({
+        id: 503,
+        name: "Sporting Clube de Portugal",
+        squad: [
+            { name: "Rui Silva" },
+            { name: "Sebastian Coates" },
+            { name: "Francisco Trincão" },
+            { name: "Viktor Gyokeres" }
+        ]
+    }),
+    "teams_ids": ["1903", "496", "498", "503"]
+}
+
 const teamIds = data["teams_ids"];  // extract the array of team IDs
 
 function printTeams( teamId ){
@@ -104,6 +159,9 @@ function mainPromiseAll(){
         });
 }
 
+
+// Export functions and data for testing
+export { printTeams, mainSequential, mainPromiseAll, data };
 
 mainSequential();  // run sequential processing
 mainPromiseAll();  // run concurrent processing
